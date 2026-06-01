@@ -1,5 +1,5 @@
 class Ship {
-  constructor(length, hitCount, sunkBool) {
+  constructor(length, hitCount, sunkBool = false) {
     this.length = length;
     this.hitCount = hitCount;
     this.sunkBool = sunkBool;
@@ -9,7 +9,8 @@ class Ship {
     return this.hitCount;
   }
   isSunk() {
-    if (this.hitCount === this.length) return true;
-    else return false;
+    if (this.hitCount === this.length) this.sunkBool = true;
+    return this.sunkBool;
   }
 }
+export { Ship };
