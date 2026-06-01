@@ -1,0 +1,44 @@
+/* =============================================================================================== */
+/* Global  */
+:root {
+  --body-bgc: rgb(43, 43, 43);
+  --card-bgc: rgb(114, 114, 114);
+  --clear-color: #eeeeee;
+  --red-color: #ec1616e5;
+  --red-clear-color: #ec1616;
+}
+* {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: var(--body-bgc);
+  color: var(--clear-color);
+}
+button {
+  cursor: pointer;
+}
+.template__button {
+  background-color: var(--red-color);
+  color: var(--clear-color);
+  box-shadow: 0 0 5px var(--square-color);
+  border: 1px solid #00000049;
+  font-size: 16px;
+  padding: 10px 24px;
+  border-radius: 40px;
+  font-weight: 500;
+  margin: 10px 4px;
+}
+.template__button:hover {
+  transform: scale(0.95);
+  background-color: var(--red-clear-color);
+}
+.template__button:active {
+  transform: scale(0.85);
+}
