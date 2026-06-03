@@ -20,20 +20,26 @@ class Gameboard {
     let count = 0;
     while (count !== ship.length) {
       if (position) {
-        if (j + count < 9 && this.board[i][j + count] === null)
+        if (j + count < 10 && this.board[i][j + count] === null)
           this.board[i][j + count] = ship;
         else this.board[i][j - count] = ship;
       } else {
-        if (i + count < 9 && this.board[i + count][j] === null)
+        if (i + count < 10 && this.board[i + count][j] === null)
           this.board[i + count][j] = ship;
         else this.board[i - count][j] = ship;
       }
       count++;
     }
-    console.log(this.board);
   }
   receiveAttack([i, j]) {
-    if (this.board[i][j] !== null) {
+    const randomZeroNine = () => {
+      return Math.floor(Math.random() * 10);
+    };
+    while (this.board[i][j] === "x") {
+      i = randomZeroNine();
+      j = randomZeroNine();
+    }
+    if (this.board[i][j] !== null && this.board[i][j] !== false) {
       this.board[i][j].hit();
       this.board[i][j] = "x";
     } else this.board[i][j] = false;

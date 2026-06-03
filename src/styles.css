@@ -198,6 +198,7 @@ h1 span {
   flex-direction: column;
   background-color: var(--card-bgc);
   border: 1px solid var(--divisory-line);
+  margin: 0 10px;
   width: 400px;
   height: 400px;
   margin-top: 30px;
