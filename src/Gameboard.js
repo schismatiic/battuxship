@@ -8,16 +8,29 @@ class Gameboard {
     this.battleship = new Ship(4);
     this.carrier = new Ship(5);
   }
-  placeShip([i, j], ship, horizontal = true) {
+  placeShip([i, j], ship, position) {
+    if (ship === "carrier") ship = this.carrier;
+    if (ship === "battleship") ship = this.battleship;
+    if (ship === "cruiser") ship = this.cruiser;
+    if (ship === "submarine") ship = this.submarine;
+    if (ship === "destroyer") ship = this.destroyer;
+
+    if (position === "Horizontal") position = true;
+    else position = false;
     let count = 0;
     while (count !== ship.length) {
-      if (horizontal) {
-        this.board[i + count][j] = ship;
+      if (position) {
+        if (j + count < 9 && this.board[i][j + count] === null)
+          this.board[i][j + count] = ship;
+        else this.board[i][j - count] = ship;
       } else {
-        this.board[i][j + count] = ship;
+        if (i + count < 9 && this.board[i + count][j] === null)
+          this.board[i + count][j] = ship;
+        else this.board[i - count][j] = ship;
       }
       count++;
     }
+    console.log(this.board);
   }
   receiveAttack([i, j]) {
     if (this.board[i][j] !== null) {

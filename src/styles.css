@@ -2,10 +2,13 @@
 /* Global  */
 :root {
   --body-bgc: rgb(43, 43, 43);
-  --card-bgc: rgb(114, 114, 114);
+  --body-bgc-darker: rgb(30, 30, 30);
+  --card-bgc: rgb(70, 70, 70);
   --clear-color: #eeeeee;
   --red-color: #ec1616e5;
   --red-clear-color: #ec1616;
+  --blue-color: #add8e6;
+  --divisory-line: #ffffff42;
 }
 * {
   border: 0;
@@ -20,9 +23,13 @@ body {
   flex-direction: column;
   background-color: var(--body-bgc);
   color: var(--clear-color);
+  font-family: "Black Ops One", system-ui;
 }
 button {
   cursor: pointer;
+}
+h1 span {
+  color: var(--red-color);
 }
 .template__button {
   background-color: var(--red-color);
@@ -40,5 +47,181 @@ button {
   background-color: var(--red-clear-color);
 }
 .template__button:active {
+  transform: scale(0.85);
+}
+#content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* =============================================================================================== */
+/* Logo  */
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+}
+/* =============================================================================================== */
+/* Start screen  */
+.start_screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: var(--card-bgc);
+  border: 1px solid var(--divisory-line);
+  width: 300px;
+  height: 300px;
+  margin-top: 30px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+  font-family: "Ubuntu", sans-serif;
+}
+.start_label1 {
+  font-weight: 700;
+}
+.start_input1 {
+  padding: 10px;
+  border: 1px solid var(--divisory-line);
+  background-color: var(--card-bgc);
+  color: var(--clear-color);
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 70%;
+}
+.play_button {
+  background-color: var(--red-color);
+  color: var(--clear-color);
+  border: 1px solid var(--divisory-line);
+  font-size: 16px;
+  padding: 10px 24px;
+  font-weight: 500;
+  margin: 10px 4px;
+  font-family: "Black Ops One", system-ui;
+}
+.play_button:hover {
+  transform: scale(0.95);
+  background-color: var(--red-clear-color);
+}
+.play_button:active {
+  transform: scale(0.85);
+}
+/* =============================================================================================== */
+/* Game info screen  */
+.game_info1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--card-bgc);
+  border: 1px solid var(--divisory-line);
+  padding: 10px;
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 700;
+}
+/* =============================================================================================== */
+/* Ship select screen  */
+.ship_select_screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: var(--card-bgc);
+  border: 1px solid var(--divisory-line);
+  padding: 10px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+  width: 230px;
+  height: 400px;
+  margin-top: 30px;
+  margin-left: 20px;
+}
+.ship {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.ship:hover {
+  background-color: var(--body-bgc-darker);
+}
+.ship_square {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: var(--body-bgc);
+  border: 1px solid var(--divisory-line);
+  height: 30px;
+  width: 30px;
+  margin: 4px;
+}
+.ship_name {
+  text-transform: uppercase;
+  font-size: 14px;
+  margin-left: 4px;
+  text-align: center;
+}
+.position_button {
+  background-color: var(--red-color);
+  color: var(--clear-color);
+  border: 1px solid var(--divisory-line);
+  font-size: 14px;
+  padding: 4px 14px;
+  font-weight: 500;
+  margin: 10px 4px;
+  width: 50%;
+  font-family: "Black Ops One", system-ui;
+}
+.position_button:hover {
+  transform: scale(0.95);
+  background-color: var(--red-clear-color);
+}
+.position_button:active {
+  transform: scale(0.85);
+}
+/* =============================================================================================== */
+/* Gameboard screen  */
+.gameboard_screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: var(--card-bgc);
+  border: 1px solid var(--divisory-line);
+  width: 400px;
+  height: 400px;
+  margin-top: 30px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+}
+.render_row {
+  display: flex;
+}
+.render_square {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: var(--blue-color);
+  border: 1px solid var(--divisory-line);
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  margin: 4px;
+}
+.render_square:hover {
+  transform: scale(0.95);
+  background-color: var(--body-bgc-darker);
+}
+.render_square:active {
   transform: scale(0.85);
 }
