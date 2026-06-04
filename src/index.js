@@ -123,6 +123,10 @@ const renderShipSelect = (player1, player2) => {
   shipSelectScreen.appendChild(random_button);
 };
 const renderChooseGameboard = (player1, player2) => {
+  if (game_info !== null) {
+    game_info.className = "game_132131";
+    game_info.textContent = "";
+  }
   const ship_list = document.querySelectorAll(".ship");
   if (ship_list.length === 0) {
     left.replaceChildren();
@@ -210,8 +214,6 @@ const renderGameboard = (player1, player2) => {
     player1Moves = [];
     player2Moves = [];
   } else {
-    const ship_list = document.querySelectorAll(".ship");
-    const shipSelectS = document.getElementById("shipSelectS");
     left.style.cssText = "display: flex; flexDirection: row";
     const gameboardScreen = document.createElement("div");
     gameboardScreen.className = "gameboard_screen";
@@ -224,23 +226,6 @@ const renderGameboard = (player1, player2) => {
         render_square.className = "render_square";
         render_square.setAttribute("coordinates", [i, j]);
         render_row.appendChild(render_square);
-        ship_list.forEach((ship) => {
-          ship.addEventListener("click", () => {
-            const shipName = ship.getAttribute("ship_name");
-            render_square.addEventListener("click", () => {
-              shipSelectS.removeChild(ship);
-              const coord = render_square.getAttribute("coordinates");
-              const coordinates = coord.split(",").map(Number);
-              player1.player_gameboard.placeShip(
-                coordinates,
-                shipName,
-                position_btn.getAttribute("position"),
-              );
-              left.replaceChildren();
-              renderGameboard(player1, player2);
-            });
-          });
-        });
         if (player1.player_gameboard.board[i][j] === false) {
           render_square.style.backgroundColor = "#191970";
         }
@@ -285,17 +270,6 @@ const renderOpponentGameboard = (player1, player2) => {
       render_square.setAttribute("coordinates", [i, j]);
       render_row.appendChild(render_square);
 
-      if (
-        player1.player_gameboard.board[i][j] !== null &&
-        player1.player_gameboard.board[i][j] !== false
-      ) {
-        const tuxedo = document.createElement("img");
-        tuxedo.src =
-          "https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png";
-        tuxedo.style.width = "15px";
-        render_square.appendChild(tuxedo);
-        render_square.style.backgroundColor = "#ec1616e5";
-      }
       if (player1Moves.includes([i, j].toString()) === false) {
         render_square.addEventListener("click", () => {
           let computerI = randomZeroNine();
@@ -324,7 +298,7 @@ const renderOpponentGameboard = (player1, player2) => {
             tuxedo.style.width = "15px";
             render_square.replaceChildren();
             render_square.appendChild(tuxedo);
-            render_square.style.backgroundColor = "#000";
+            render_square.style.backgroundColor = "#ec1616e5";
             player1.player_gameboard.receiveAttack([i, j]);
             player1Moves.push([i, j].toString());
             player2.player_gameboard.receiveAttack([computerI, computerJ]);
