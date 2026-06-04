@@ -60,14 +60,12 @@ const startScreen = () => {
     const player = new Player(start_input1.value);
     const computer = new Player("Computer", "computer");
     left.replaceChildren();
-    randomPlaced(player);
     randomPlaced(computer);
-    // renderShipSelect(player, computer);
-    renderGameboard(player, computer);
-    renderOpponentGameboard(computer, player);
+    renderShipSelect(player, computer);
+    renderChooseGameboard(player, computer);
   });
 };
-const renderShipSelect = (player, player2) => {
+const renderShipSelect = (player1, player2) => {
   const ships = [
     { name: "carrier", length: 5 },
     { name: "battleship", length: 4 },
@@ -77,10 +75,21 @@ const renderShipSelect = (player, player2) => {
   ];
   const shipSelectScreen = document.createElement("div");
   const position_button = document.createElement("button");
+  const random_button = document.createElement("button");
   const gameboard_squares = document.querySelectorAll(".render_square");
   position_button.id = "position_btn";
+  random_button.id = "random_btn";
   shipSelectScreen.id = "shipSelectS";
   position_button.textContent = "Horizontal";
+  random_button.textContent = "Random";
+  random_button.classList = "position_button";
+  random_button.addEventListener("click", () => {
+    randomPlaced(player1);
+    left.replaceChildren();
+    renderGameboard(player1, player2);
+    right.replaceChildren();
+    renderOpponentGameboard(player2, player1);
+  });
   position_button.setAttribute("position", "Horizontal");
   shipSelectScreen.classList = "ship_select_screen";
   ships.forEach((ship) => {
@@ -111,6 +120,77 @@ const renderShipSelect = (player, player2) => {
   });
   right.appendChild(shipSelectScreen);
   shipSelectScreen.appendChild(position_button);
+  shipSelectScreen.appendChild(random_button);
+};
+const renderChooseGameboard = (player1, player2) => {
+  const ship_list = document.querySelectorAll(".ship");
+  if (ship_list.length === 0) {
+    left.replaceChildren();
+    renderGameboard(player1, player2);
+    right.replaceChildren();
+    renderOpponentGameboard(player2, player1);
+  } else {
+    const shipSelectS = document.getElementById("shipSelectS");
+    left.style.cssText = "display: flex; flexDirection: row";
+    const gameboardScreen = document.createElement("div");
+    gameboardScreen.className = "gameboard_screen";
+    for (let i = 0; i < 10; i++) {
+      const render_row = document.createElement("div");
+      render_row.className = "render_row";
+      for (let j = 0; j < 10; j++) {
+        const render_square = document.createElement("div");
+        const position_btn = document.getElementById("position_btn");
+        render_square.className = "render_square";
+        render_square.setAttribute("coordinates", [i, j]);
+        render_row.appendChild(render_square);
+        ship_list.forEach((ship) => {
+          ship.addEventListener("click", () => {
+            const random_button = document.getElementById("random_btn");
+            if (random_button !== null) {
+              shipSelectS.removeChild(random_button);
+            }
+            const shipName = ship.getAttribute("ship_name");
+            render_square.addEventListener("click", () => {
+              const coord = render_square.getAttribute("coordinates");
+              const coordinates = coord.split(",").map(Number);
+              const playerChoose = player1.player_gameboard.placeShip(
+                coordinates,
+                shipName,
+                position_btn.getAttribute("position"),
+              );
+              if (playerChoose) {
+                shipSelectS.removeChild(ship);
+              }
+              left.replaceChildren();
+              renderChooseGameboard(player1, player2);
+            });
+          });
+        });
+        if (
+          player1.player_gameboard.board[i][j] !== null &&
+          player1.player_gameboard.board[i][j] !== false
+        ) {
+          const tuxedo = document.createElement("img");
+          if (player1.player_gameboard.board[i][j] === "x") {
+            tuxedo.src =
+              "https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png";
+            tuxedo.style.width = "15px";
+            render_square.appendChild(tuxedo);
+            render_square.style.backgroundColor = "#ec1616e5";
+          } else {
+            tuxedo.src =
+              "https://media.tenor.com/S61VCO73mOAAAAAj/linux-tux.gif";
+            tuxedo.style.width = "15px";
+            render_square.appendChild(tuxedo);
+            render_square.style.backgroundColor = "rgb(43, 43, 43)";
+          }
+        }
+      }
+      gameboardScreen.appendChild(render_row);
+    }
+
+    left.appendChild(gameboardScreen);
+  }
 };
 const renderGameboard = (player1, player2) => {
   if (player1.player_gameboard.allSunk()) {
