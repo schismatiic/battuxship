@@ -17,35 +17,21 @@ const randomPosition = () => {
   else return "Vertical";
 };
 const randomPlaced = (player) => {
-  player.player_gameboard.placeShip(
-    [randomZeroNine(), randomZeroNine()],
-    "carrier",
-    randomPosition(),
-  );
-
-  player.player_gameboard.placeShip(
-    [randomZeroNine(), randomZeroNine()],
-    "battleship",
-    randomPosition(),
-  );
-
-  player.player_gameboard.placeShip(
-    [randomZeroNine(), randomZeroNine()],
-    "cruiser",
-    randomPosition(),
-  );
-
-  player.player_gameboard.placeShip(
-    [randomZeroNine(), randomZeroNine()],
-    "submarine",
-    randomPosition(),
-  );
-
-  player.player_gameboard.placeShip(
-    [randomZeroNine(), randomZeroNine()],
-    "destroyer",
-    randomPosition(),
-  );
+  const ships = ["carrier", "battleship", "cruiser", "submarine", "destroyer"];
+  for (let index = 0; index < ships.length; index++) {
+    let placeShip = player.player_gameboard.placeShip(
+      [randomZeroNine(), randomZeroNine()],
+      ships[index],
+      randomPosition(),
+    );
+    while (placeShip === false) {
+      placeShip = player.player_gameboard.placeShip(
+        [randomZeroNine(), randomZeroNine()],
+        ships[index],
+        randomPosition(),
+      );
+    }
+  }
 };
 const startScreen = () => {
   const startScreen = document.createElement("div");
@@ -127,8 +113,6 @@ const renderShipSelect = (player, player2) => {
   shipSelectScreen.appendChild(position_button);
 };
 const renderGameboard = (player1, player2) => {
-  console.log(player1.player_gameboard.board);
-  console.log(player2.player_gameboard.board);
   if (player1.player_gameboard.allSunk()) {
     game_info.className = "game_info1";
     game_info.textContent = `${player2.name} wins!`;
@@ -151,9 +135,6 @@ const renderGameboard = (player1, player2) => {
     left.style.cssText = "display: flex; flexDirection: row";
     const gameboardScreen = document.createElement("div");
     gameboardScreen.className = "gameboard_screen";
-    console.log(player1.player_gameboard.allSunk());
-    console.log(player2.player_gameboard.allSunk());
-
     for (let i = 0; i < 10; i++) {
       const render_row = document.createElement("div");
       render_row.className = "render_row";
@@ -223,12 +204,7 @@ const renderOpponentGameboard = (player1, player2) => {
       render_square.className = "render_square";
       render_square.setAttribute("coordinates", [i, j]);
       render_row.appendChild(render_square);
-      let computerI = randomZeroNine();
-      let computerJ = randomZeroNine();
-      while (player2Moves.includes([computerI, computerJ].toString())) {
-        computerI = randomZeroNine();
-        computerJ = randomZeroNine();
-      }
+
       if (
         player1.player_gameboard.board[i][j] !== null &&
         player1.player_gameboard.board[i][j] !== false
@@ -242,6 +218,12 @@ const renderOpponentGameboard = (player1, player2) => {
       }
       if (player1Moves.includes([i, j].toString()) === false) {
         render_square.addEventListener("click", () => {
+          let computerI = randomZeroNine();
+          let computerJ = randomZeroNine();
+          while (player2Moves.includes([computerI, computerJ].toString())) {
+            computerI = randomZeroNine();
+            computerJ = randomZeroNine();
+          }
           if (player1.player_gameboard.board[i][j] === null) {
             render_square.style.backgroundColor = "#191970";
             player1.player_gameboard.receiveAttack([i, j]);

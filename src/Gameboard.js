@@ -18,18 +18,22 @@ class Gameboard {
     if (position === "Horizontal") position = true;
     else position = false;
     let count = 0;
+    for (let index = 0; index < ship.length; index++) {
+      if (position) {
+        if (j + index >= 10 || this.board[i][j + index] !== null) return false;
+      } else {
+        if (i + index >= 10 || this.board[i + index][j] !== null) return false;
+      }
+    }
     while (count !== ship.length) {
       if (position) {
-        if (j + count < 10 && this.board[i][j + count] === null)
-          this.board[i][j + count] = ship;
-        else this.board[i][j - count] = ship;
+        this.board[i][j + count] = ship;
       } else {
-        if (i + count < 10 && this.board[i + count][j] === null)
-          this.board[i + count][j] = ship;
-        else this.board[i - count][j] = ship;
+        this.board[i + count][j] = ship;
       }
       count++;
     }
+    return true;
   }
   receiveAttack([i, j]) {
     const randomZeroNine = () => {
